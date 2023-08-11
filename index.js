@@ -1,8 +1,6 @@
 import express from "express";      // Requisição do pacote do express
 import dotenv from "dotenv";
-
-import { selectUsuarios, selectUsuario, insertUsuario } from "./bd.js";
-
+import { selectUsuarios, selectUsuario, insertUsuario, deleteUsuario } from "./bd.js";
 const app = express();              // Instancia o Express
 const port = 3000;                  // Define a porta
 
@@ -53,6 +51,19 @@ app.post("/usuario", async (req, res) => {
   try {
     await insertUsuario(req.body);
     res.status(201).json({ message: "Usuário inserido com sucesso!" });
+  } catch (error) {
+    res.status(error.status || 500).json({ message: error.message || "Erro!" });
+  }
+});
+//index.js
+app.delete("/usuario/:id", async (req, res) => {
+  console.log("Rota DELETE /usuario solicitada");
+  try {
+    const usuario = await selectUsuario(req.params.id);
+    if (usuario.length > 0) {
+      await deleteUsuario(req.params.id);
+      res.status(200).json({ message: "Usuário excluido com sucesso!!" });
+    } else res.status(404).json({ message: "Usuário não encontrado!" });
   } catch (error) {
     res.status(error.status || 500).json({ message: error.message || "Erro!" });
   }
