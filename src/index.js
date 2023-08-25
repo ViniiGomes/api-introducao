@@ -5,6 +5,8 @@ const port = 3000;
              // Define a porta
 dotenv.config();
 
+const app = express();
+
 app.use(express.json());
 
 app.listen(port, () => {            // Um socket para "escutar" as requisições
