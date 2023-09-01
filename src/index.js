@@ -2,7 +2,8 @@ import express from "express";      // Requisição do pacote do express
 import dotenv from "dotenv";
 import roteadorUsuario from "./routes/usuario.js";
 const port = 3000;     
-             // Define a porta
+import roteadorLogin from "./routes/login.js";
+
 dotenv.config();
 
 const app = express();
@@ -22,6 +23,7 @@ app.get("/", (req, res) => {        // Cria a rota da raiz do projeto
   console.log("Rota / solicitada");
 });
 app.use(roteadorUsuario);
+app.use(roteadorLogin);
 
 
 
